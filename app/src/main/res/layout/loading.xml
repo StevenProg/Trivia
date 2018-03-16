@@ -1,0 +1,29 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/startOptions"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/Title"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:background="@null"
+        android:gravity="center"
+        android:padding="15dp"
+        android:layout_margin="20dp"
+        android:text="Loading next category..."
+        android:textAlignment="center"
+        android:textSize="20sp" />
+
+
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="142dp"
+        android:layout_height="130dp"
+        android:layout_gravity="center"
+        android:foregroundGravity="center" />
+</LinearLayout>
