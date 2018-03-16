@@ -18,8 +18,19 @@ public class StartScreenActivity  extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            lifes = savedInstanceState.getInt("lifes");
+            points = savedInstanceState.getInt("points");
+        }
         setContentView(R.layout.activity_start);
         setListeners();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("points", points);
+        outState.putInt("lifes", lifes);
     }
 
     private void setListeners(){

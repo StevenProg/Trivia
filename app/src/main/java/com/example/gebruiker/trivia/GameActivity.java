@@ -30,11 +30,31 @@ public class GameActivity extends AppCompatActivity implements TriviaHelper.Call
     Button butTwo;
     Button butThree;
     Button butFour;
+    Question choosenQuestion;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            choosenQuestion = (Question) savedInstanceState.getSerializable("question");
+            if (choosenQuestion != null){
+                findViews();
+                answerGame(choosenQuestion);
+                setHearts();
+            }
+            else {
+                chooseDifficulty();
+            }
+        }
         chooseDifficulty();
     }
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("question", choosenQuestion);
+
+    }
+
 
     // gets 4 difficulty levels of a random category from TrivialHelper.java
     public void chooseDifficulty() {
@@ -46,12 +66,7 @@ public class GameActivity extends AppCompatActivity implements TriviaHelper.Call
     // sets screen and let player choose the difficulty when questions are received
     @Override
     public void gotQuestion(ArrayList<Question> questions, String category) {
-        setContentView(R.layout.activity_game);
-        Title = findViewById(R.id.Title);
-        butOne = findViewById(R.id.but_1);
-        butTwo = findViewById(R.id.but_2);
-        butThree = findViewById(R.id.but_3);
-        butFour = findViewById(R.id.but_4);
+        findViews();
         butTwo.setVisibility(View.VISIBLE);
         butThree.setVisibility(View.VISIBLE);
         Title.setText("Your category is " + category + "! Select your difficulty");
@@ -69,6 +84,15 @@ public class GameActivity extends AppCompatActivity implements TriviaHelper.Call
     @Override
     public void gotQuestionError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    public void findViews() {
+        setContentView(R.layout.activity_game);
+        Title = findViewById(R.id.Title);
+        butOne = findViewById(R.id.but_1);
+        butTwo = findViewById(R.id.but_2);
+        butThree = findViewById(R.id.but_3);
+        butFour = findViewById(R.id.but_4);
     }
 
     // a category containing invalid answers, questions and/or points is selected -> new random category
@@ -233,7 +257,6 @@ public class GameActivity extends AppCompatActivity implements TriviaHelper.Call
         // a question is choosen, use this question in next view and pick the answers of the other questions as other choices
         @Override
         public void onClick(View view) {
-            Question choosenQuestion;
             Integer tag = Integer.parseInt((String) view.getTag());
             ArrayList<String> answerList = new ArrayList<String>();
             String question = null, answer = null;
